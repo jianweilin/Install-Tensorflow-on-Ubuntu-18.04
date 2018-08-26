@@ -71,14 +71,12 @@ Install the CUDA 9.0 Toolkit?
 (y)es/(n)o/(q)uit: yes
 ```
 
-#### CUDA install-actions
-
 Add these lines to the end of `~/.bashrc`:
 ```
 export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 ```
-Resteart the terminal.
+Restart the terminal.
 
 ## Step 3: Install cuDNN 7.0.5
 
