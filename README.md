@@ -91,14 +91,7 @@ sudo cp  cuda/include/cudnn.h /usr/local/cuda-9.0/include/
 sudo chmod a+r /usr/local/cuda-9.0/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
 ```
 
-## Step 4: Install libcupti
-
-Run the following command:
-```
-sudo apt-get install libcupti-dev
-```
-
-## Step 5: Install Anaconda
+## Step 4: Install Anaconda
 
 Download Anaconda for Linux: https://www.anaconda.com/download/#linux
 
@@ -116,14 +109,14 @@ Activate the installation with the following command:
 source activate tf
 ```
 
-## Step 6: Instal TensorFlow GPU
+## Step 5: Instal TensorFlow GPU
 
 Run:
 ```
 pip install tensorflow-gpu==1.5
 ```
 
-## (Optional) Step 7: Install Keras
+## (Optional) Step 6: Install Keras
 
 Run:
 ```
