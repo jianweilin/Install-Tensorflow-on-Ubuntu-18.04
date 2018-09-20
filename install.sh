@@ -8,7 +8,7 @@ echo "Checking the GPU driver version..."
 
 nvidia-smi
 
-echo "The output should be like the following:
+echo -e "\n\nThe output should be like the following:
 Wed Aug 22 19:25:07 2018 
 +-----------------------------------------------------------------------------+
 | NVIDIA-SMI 390.48                 Driver Version: 390.48                    |
@@ -20,49 +20,53 @@ Wed Aug 22 19:25:07 2018
 | N/A   53C    P0    N/A /  N/A |    237MiB /  4046MiB |      0%      Default |
 +-------------------------------+----------------------+----------------------+"
 
+echo -e "\n"
 read -p "Press Enter to continue or press Ctrl+C to abort"
 
 mkdir tmp-install-tensorflow
 cd tmp-install-tensorflow
 
-echo "Installing CUDA Toolkit 9.0 ..."
+echo -e "\n\nInstalling CUDA Toolkit 9.0 ..."
 
 wget https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run
-sudo chmod +x cuda_9.0.176_384.81_linux.run
-echo "***NOTE! Say YES to installing with an unsupported configuration and say NO to Installing NVIDIA Accelerated Graphics Driver!***"
+sudo chmod +x cuda_9.0.176_384.81_linux-run
+echo -e "***\n\nNOTE! Say YES to installing with an unsupported configuration and say NO to Installing NVIDIA Accelerated Graphics Driver!***"
 read -p "Press Enter to continue"
-./cuda_9.0.176_384.81_linux.run --override
+./cuda_9.0.176_384.81_linux-run --override
 
 echo "export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}}" >> ~/.bashrc
 echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}" >> ~/.bashrc
 source ~/.bashrc
 
-echo "Installing cuDNN 7.0.5 ..."
+echo -e "\nInstalling cuDNN 7.0.5 ..."
+# wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/v7.0.5/prod/9.0_20171129/cudnn-9.0-linux-x64-v7
+# tar -zxvf cudnn-9.0-linux-x64-v7.tgz
+# sudo cp -P cuda/lib64/libcudnn* /usr/local/cuda-9.0/lib64/
+# sudo cp  cuda/include/cudnn.h /usr/local/cuda-9.0/include/
+#sudo chmod a+r /usr/local/cuda-9.0/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+CUDNN_PKG="libcudnn7_7.0.5.15-1+cuda9.0_amd64.deb"
+wget https://github.com/ashokpant/cudnn_archive/raw/master/v7.0/${CUDNN_PKG}
+sudo dpkg -i ${CUDNN_PKG}
+sudo apt-get update
 
-wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/v7.0.5/prod/9.0_20171129/cudnn-9.0-linux-x64-v7
-tar -zxvf cudnn-9.0-linux-x64-v7.tgz
-sudo cp -P cuda/lib64/libcudnn* /usr/local/cuda-9.0/lib64/
-sudo cp  cuda/include/cudnn.h /usr/local/cuda-9.0/include/
-sudo chmod a+r /usr/local/cuda-9.0/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+echo -e "\n\nInstalling Anaconda ..."
 
-echo "Installing Anaconda ..."
-
-wget https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh
+curl -O https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh
 sh Anaconda3-5.2.0-Linux-x86_64.sh
+echo "export PATH=~/anaconda3/bin:$PATH" >> ~/.bashrc
+source ~/.bashrc
 
-echo "Creating an Anaconda environment named tf ..."
+echo -e "\n\nCreating an Anaconda environment named tf ..."
 conda create -n tf pip python=3.6
 source activate tf
 
-echo "To activate the installation, run: source activate tf"
-echo "To deactivate the instalation, run: source deactivate tf"
 read -p "Press Enter to continue"
 
-echo "Installing TensorFlow GPU 1.5 ..."
+echo -e "\nInstalling TensorFlow GPU 1.5 ..."
 
 pip install tensorflow-gpu==1.5
 
-echo "Installing Keras"
+echo -e "\n\nInstalling Keras"
 
 pip install keras
 
